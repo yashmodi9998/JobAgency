@@ -1,0 +1,28 @@
+.heading-text {
+    color: #c7e1e4;
+    font-size: larger;
+    font-weight: 900;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.heading-text:hover {
+    color: white;
+}
+
+
+a.nav-link {
+    color: #c7e1e4;
+}
+
+a.nav-link:hover {
+    color: white;
+}
+
+footer {
+    background-color: #093A3E;
+    color: white;
+}
+
+.social-icons a {
+    color: white;
+}
