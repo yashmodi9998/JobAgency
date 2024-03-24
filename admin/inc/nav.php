@@ -26,11 +26,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="applicants.php">Applicants</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="register.php">Apply For JOB</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="./inc/logout.php">logout</a>
+                        <a class="nav-link" href="./inc/logout.php">Logout</a>
                     </li>
                     
                 </ul>

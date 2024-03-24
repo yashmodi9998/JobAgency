@@ -21,9 +21,9 @@ $applications = mysqli_query($con, $query);
 
     <div class="row">
       <div class="mb-4">
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Add New Applicant
-        </button>
+        </button> -->
       </div>
         <?php  
         // Looping through each applicants and displaying its detail
@@ -45,7 +45,7 @@ $applications = mysqli_query($con, $query);
     <div>
 
 </div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
     <form method="Post" action="inc/addapplicant.php" enctype="multipart/form-data">
@@ -75,7 +75,7 @@ $applications = mysqli_query($con, $query);
       </form>
     </div>
   </div>
-</div>
+</div> -->
 </div>
 
 <?php include('inc/footer.php');

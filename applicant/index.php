@@ -3,7 +3,7 @@ define('PAGE_TITLE', 'Home');
 include('inc/nav.php'); 
 include('../admin/inc/connect.php');
 include('../admin/inc/functions.php');
-include("../admin/inc/config.php");
+include('../admin/inc/config.php');
 secure(); 
 // Query to fetch all jobs
 $query = 'SELECT * FROM `jobs`';
@@ -52,7 +52,7 @@ $row= mysqli_fetch_assoc($user);
                 ?>
                     <tr>
                         <td scope="row"><?php echo $counter; ?></td>
-                        <td><?php echo $job['title']; ?></td>
+                        <td><a href="jobDescription.php?job_id=<?= $job['job_id']; ?>"><?php echo $job['title']; ?></a></td>
                         <td><?php echo $job['description']; ?></td>
                         <td><?php echo $job['company']; ?></td>
                         <td><?php echo $job['location']; ?></td>

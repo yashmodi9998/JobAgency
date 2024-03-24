@@ -33,6 +33,16 @@ secure();
         // To get applicant details
         $applicant_details = mysqli_fetch_assoc($applicatiant_result);
     }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $new_status = $_POST['status'];
+
+        $application_id = $_POST['application_id'];
+        $update_query = "UPDATE applications SET status = '$new_status' WHERE application_id = $application_id";
+        mysqli_query($con, $update_query);
+        
+        header("Location: {$_SERVER['PHP_SELF']}?app_id=$app_id");
+        exit();
+    }
 ?>
 
 <div class="container mt-4">
@@ -93,6 +103,26 @@ secure();
                         // Display the status of application with color
                             echo '<span class="' . $statusColorClass . '">' . $status . '</span>';
                             ?>
+                            <form method="post">
+                                <label for="status">Change Status:</label>
+                                <select name="status" id="status">
+                                    <?php
+                                        // Define available status options
+                                        $statusOptions = array('applied', 'in-review', 'rejected', 'accepted');
+                                        
+                                        // Iterate through status options
+                                        foreach ($statusOptions as $statusOption) {
+                                            // Check if the current status matches the option
+                                            $selected = ($application['application_status'] == $statusOption) ? 'selected' : '';
+                                            // Output the option with the selected attribute if matched
+                                            echo "<option value='$statusOption' $selected>".ucfirst($statusOption)."</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <!-- Hidden input to store the application ID -->
+                                <input type="hidden" name="application_id" value="<?php echo $application['application_id']; ?>">
+                                <input type="submit" value="Update Status">
+                        </form>
                         </p>
                         
                         <hr>

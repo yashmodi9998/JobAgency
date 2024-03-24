@@ -38,20 +38,24 @@ secure();
 
 <div class="container mt-4">
     <div class="row">
-     
         <div class="col-md-4 mb-4">
             <div class="card">
                 <img src="<?= $applicant_details['image_URL']; ?>" class="card-img-top" alt="Profile Picture">
                 <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
                     <h5 class="card-title"><?= $applicant_details['full_name']; ?></h5>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                    Update Profile
+                    </button>
+                </div>
                     <p class="card-text"><?= $applicant_details['email']; ?></p>
                     <p class="card-text">
                         <?php if($applicant_details['resume_link']){?>
                     <a href="<?= $applicant_details['resume_link']; ?>" target="_blank" download>
                         Download Resume
-                  </a>
-<?php }?>
-                </p>
+                    </a>
+                    <?php }?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -60,7 +64,7 @@ secure();
         <?php
         //check if there is an application for a candidate 
         if(mysqli_num_rows($applications) > 0 ){ 
-?>
+        ?>
             <div class="card">
                 <div class="card-header">
                     Job Application Details
@@ -95,7 +99,9 @@ secure();
                             echo '<span class="' . $statusColorClass . '">' . $status . '</span>';
                             ?>
                         </p>
-                        
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteJob<?= $application['job_id']; ?>">
+                            Delete
+                            </button>
                         <hr>
                     <?php }
                     ?>
@@ -104,11 +110,79 @@ secure();
             <?php }else{
                 //if there is no application from the candidate
             ?><div class="alert alert-info mt-3" role="alert">
-        Right now, Candidate has not applied for any Jobs.
-    </div><?php
-        }?>
+        Right now, You have not applied for any Jobs.
         </div>
-        
+        <?php
+        }
+        ?>
     </div>
 </div>
+
+<div class="modal fade" id="editProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="inc/updateProfile.php">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editProfileModalLabel">Edit Profile</h1>
+                </div>
+                <div class="modal-body">
+                    <!-- Input fields for updating profile details -->
+                    <div class="mb-3">
+                        <label for="edit_full_name" class="form-label">Full Name</label>
+                        <input type="text" name="full_name" class="form-control" id="edit_full_name" value="<?= $applicant_details['full_name']; ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_email" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="edit_email" value="<?= $applicant_details['email']; ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="resume" class="form-label">Resume</label>
+                        <?php if(isset($applicant_details['resume_link'])): ?>
+                            <div>
+                                Current Resume: <a href="<?= $applicant_details['resume_link']; ?>" target="_blank"><?= basename($applicant_details['resume_link']); ?></a>
+                            </div>
+                            <input type="hidden" name="current_resume_link" value="<?= $applicant_details['resume_link']; ?>">
+                        <?php endif; ?>
+                        <input type="file" name="resume" accept=".pdf, .doc, .docx" class="form-control" id="resume">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="hidden" name="applicant_id" value="<?= $applicant_details['applicant_id']; ?>">
+                    <button type="submit" name="updateProfile" class="btn btn-outline-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<?php
+    foreach ($applications as $application) {
+?>
+
+<div class="modal fade" id="confirmDeleteJob<?= $application['job_id']; ?>" tabindex="-1" aria-labelledby="confirmDeleteLabel<?= $application['job_id']; ?>" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel<?= $application['job_id']; ?>">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this job application?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="inc/deleteJob.php">
+                    <input type="hidden" name="job_id" value="<?= $application['job_id']; ?>">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<?php
+}
+?>
 <?php include('../admin/inc/footer.php');
