@@ -121,7 +121,7 @@ secure();
 <div class="modal fade" id="editProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="inc/updateProfile.php">
+            <form method="post" enctype="multipart/form-data" action="inc/updateProfile.php">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editProfileModalLabel">Edit Profile</h1>
                 </div>
@@ -136,14 +136,14 @@ secure();
                         <input type="email" name="email" class="form-control" id="edit_email" value="<?= $applicant_details['email']; ?>">
                     </div>
                     <div class="mb-3">
-                        <label for="resume" class="form-label">Resume</label>
+                        <label for="edit_resume" class="form-label">Resume</label>
                         <?php if(isset($applicant_details['resume_link'])): ?>
                             <div>
                                 Current Resume: <a href="<?= $applicant_details['resume_link']; ?>" target="_blank"><?= basename($applicant_details['resume_link']); ?></a>
                             </div>
                             <input type="hidden" name="current_resume_link" value="<?= $applicant_details['resume_link']; ?>">
                         <?php endif; ?>
-                        <input type="file" name="resume" accept=".pdf, .doc, .docx" class="form-control" id="resume">
+                        <input type="file" name="edit_resume" accept=".pdf, .doc, .docx" class="form-control" id="edit_resume">
                     </div>
                 </div>
                 <div class="modal-footer">

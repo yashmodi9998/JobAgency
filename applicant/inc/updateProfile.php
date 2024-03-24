@@ -3,6 +3,7 @@
 include('../../admin/inc/connect.php');
 
 if(isset($_POST['updateProfile'])) {
+  print_r(  $_POST);
     // Retrieve form data
     $applicant_id = $_POST['applicant_id']; // Assuming you store the applicant's ID in a session
     $full_name = $_POST['full_name'];
@@ -10,14 +11,15 @@ if(isset($_POST['updateProfile'])) {
     $resume_link = $_POST['current_resume_link']; // Retrieve the current resume link from the hidden field
 
     // If a new resume file is uploaded, update the resume link
-    if(isset($_FILES['resume']) && $_FILES['resume']['error'] === UPLOAD_ERR_OK) {
-        $resume_tmp_name = $_FILES['resume']['tmp_name'];
-        $resume_name = $_FILES['resume']['name'];
+    if(isset($_FILES['edit_resume']) && $_FILES['edit_resume']['error'] === UPLOAD_ERR_OK) {
+        $resume_tmp_name = $_FILES['edit_resume']['tmp_name'];
+        $resume_name = $_FILES['edit_resume']['name'];
         $upload_dir = '../../admin/inc/uploads/';
         $resume_link = $upload_dir . $resume_name;
         if(move_uploaded_file($resume_tmp_name, $resume_link)) {
             // Update the resume link in the database only if the file is successfully uploaded
             $resume_link = mysqli_real_escape_string($con, $resume_link);
+            // echo $resume_link;
         } else {
             // Handle file upload error
             echo "Error uploading resume file.";
